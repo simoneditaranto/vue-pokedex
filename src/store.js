@@ -6,6 +6,9 @@ export const store = reactive({
     userPokemonName: '',
 
     // variabile che registra il pokemon appena cercato
-    actualPokemon: '',
+    actualPokemon: [],
+
+    // il nostro pokedex
+    pokedex: [],
 
 });

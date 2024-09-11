@@ -41,6 +41,10 @@ export default {
 
 <style>
 
+#pokemon {
+    padding: 20px;
 
+    border: 1px solid red;
+}
 
 </style>

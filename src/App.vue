@@ -5,6 +5,7 @@ import { store } from './store.js';
 
 import AppSearch from './components/AppSearch.vue';
 import AppPokemon from './components/AppPokemon.vue';
+import AppPokedex from './components/AppPokedex.vue';
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
 
     AppSearch,
     AppPokemon,
+    AppPokedex,
 
   },
 
@@ -28,6 +30,7 @@ export default {
 
   methods: {
 
+    // metodo che effettua la chiamata API
     searchPokemonByName() {
       console.log('ricerca avviata');
 
@@ -36,13 +39,21 @@ export default {
         .then(res => {
           console.log(res.data.stats);
           this.store.actualPokemon = res.data;
-          console.log(this.store.actualPokemon);
+          // console.log(this.store.actualPokemon);
         })
       };
 
     },
 
+    // metodo che aggiunge il pokemon cercato al mio pokedex
+    addToPokedex() {
+      this.store.pokedex.push(this.store.actualPokemon);
+  
+      console.log(this.store.pokedex);
+    },
+
   },
+
 
 }
 
@@ -55,6 +66,15 @@ export default {
   <AppSearch @search="searchPokemonByName()"></AppSearch>
 
   <AppPokemon :item="this.store.actualPokemon"></AppPokemon>
+
+  <button @click="addToPokedex()">Aggiungi</button>
+
+  <AppPokedex 
+    v-if="store.pokedex.length > 0"
+    v-for="actualItem in this.store.pokedex"
+    :item="actualItem"
+  >
+  </AppPokedex>
 
 </template>
 
