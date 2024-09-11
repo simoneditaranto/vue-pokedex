@@ -52,6 +52,17 @@ export default {
       console.log(this.store.pokedex);
     },
 
+    changeActualPokemon(actualItem) {
+      this.store.actualPokemon = actualItem;
+    },
+
+    removeFromPokedex() {
+      const indexToRemove = this.store.pokedex.indexOf(this.store.actualPokemon);
+      // console.log(indexToRemove);
+      this.store.pokedex.splice(indexToRemove, 1);
+      // console.log(this.store.pokedex);
+    },
+
   },
 
 
@@ -66,13 +77,25 @@ export default {
   <AppSearch @search="searchPokemonByName()"></AppSearch>
 
   <AppPokemon :item="this.store.actualPokemon"></AppPokemon>
+  <button 
+    v-if="this.store.pokedex.includes(this.store.actualPokemon)"
+    @click="removeFromPokedex()"  
+  >
+    Rimuovi
+  </button>
 
-  <button @click="addToPokedex()">Aggiungi</button>
+  <button 
+    @click="addToPokedex()"
+    v-if="!this.store.pokedex.includes(this.store.actualPokemon)"
+  >
+    Aggiungi
+  </button>
 
   <AppPokedex 
     v-if="store.pokedex.length > 0"
     v-for="actualItem in this.store.pokedex"
     :item="actualItem"
+    @click="changeActualPokemon(actualItem)"
   >
   </AppPokedex>
 
