@@ -14,11 +14,24 @@ export default {
         
         return {
 
-            
+            actualPokemon: '',
 
         }
 
     },
+
+    methods: {
+
+        // metodo che invia il nuovo pokemon attuale da visualizzare
+        sendActualPokemon(actualItem) {
+
+            this.actualPokemon = actualItem;
+
+            this.$emit('pokemonSent', this.actualPokemon);
+
+        },
+
+    }
 
 }
 
@@ -28,7 +41,15 @@ export default {
 
     <div id="pokedex">
         
-        <div class="pokemon">nome: {{ item.name }}</div>
+        <div class="pokemon" v-for="actualItem in item">
+
+            <span class="pokemon-name" @click="sendActualPokemon(actualItem)">
+                {{ actualItem.name }}
+            </span>
+
+            <!-- <img :src="item.sprites.front_default" :alt="item.name"> -->
+        </div>
+        
 
     </div>
 
@@ -37,18 +58,22 @@ export default {
 <style lang="scss" scoped>
 
 #pokedex {
+    
     padding: 20px;
 
     border: 1px solid rgb(124, 0, 124);
 
     .pokemon {
 
-        &:hover {
-            text-decoration: underline;
+        .pokemon-name {
 
             cursor: pointer;
+
         }
+
     }
+
+    
 }
 
 </style>
