@@ -43,11 +43,16 @@ export default {
         
         <div class="pokemon" v-for="actualItem in item">
 
-            <span class="pokemon-name" @click="sendActualPokemon(actualItem)">
+            <!-- <span class="pokemon-name" @click="sendActualPokemon(actualItem)">
                 {{ actualItem.name }}
-            </span>
+            </span> -->
+            
+            <div class="sprite-container" @click="sendActualPokemon(actualItem)">
 
-            <!-- <img :src="item.sprites.front_default" :alt="item.name"> -->
+                <img :src="actualItem.sprites.front_default" :alt="actualItem.name">
+
+            </div>
+
         </div>
         
 

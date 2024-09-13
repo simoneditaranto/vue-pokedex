@@ -31,10 +31,22 @@ export default {
     <div id="pokemon">
 
         <ul>
+
             <li>nome: {{ item.name }}</li>
             <li>altezza: {{ item.height }}</li>
             <li>peso: {{ item.weight }}</li>
-            <!-- <img :src="actualPokemon.sprites.front_default" :alt="actualPokemon.name"> -->
+            <img :src="item.sprites.front_default" :alt="item.name">
+
+            <div class="stats">
+
+                <ul>
+                    <li v-for="actualStats in item.stats">
+                        {{ actualStats.stat.name }}: {{ actualStats.base_stat }}
+                    </li>
+                </ul>
+                
+            </div>
+
         </ul>
 
     </div>

@@ -53,13 +53,23 @@ export default {
 
             if(this.userPokemonName.trim() != '') {
 
-                axios.get(`https://pokeapi.co/api/v2/pokemon/${this.userPokemonName}`)
+                axios.get(`https://pokeapi.co/api/v2/pokemon/${this.userPokemonName.toLowerCase()}`)
                 .then(res => {
                 // console.log(res.data.stats);
                 this.actualPokemon = res.data;
                 // console.log(this.actualPokemon);
 
                 })
+
+                .catch(error => {
+
+                    console.error('Errore nella richiesta', error);
+                    this.actualPokemon = [];
+
+                });
+
+                console.log(this.actualPokemon);
+
             };
 
         },
@@ -70,6 +80,8 @@ export default {
             this.pokedex.push(this.actualPokemon);
 
             console.log(this.pokedex);
+
+            // localStorage.setItem('pokedex', JSON.stringify(this.pokedex));
 
         },
 
@@ -104,7 +116,7 @@ export default {
 
     <AppSearch @dataSent="handleData" />
 
-    <div class="pokemon-container">
+    <div class="pokemon-container" v-if="actualPokemon != ''">
 
         <AppPokemon :item="actualPokemon"></AppPokemon>
 
