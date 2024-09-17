@@ -16,6 +16,10 @@ export default {
 
     },
 
+    created() {
+        
+    },
+
     methods: {
 
         
@@ -50,6 +54,9 @@ export default {
         </ul>
 
     </div>
+    <!-- <div class="empty-pokemon" v-else>
+
+    </div> -->
 
 </template>
 

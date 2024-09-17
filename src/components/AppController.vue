@@ -30,6 +30,20 @@ export default {
             // oggetto che contiene tutti i pokemon catturati
             pokedex: [],
 
+            isCatched: false,
+
+        }
+
+    },
+
+    created() {
+
+        if(localStorage.getItem('pokedex') != null) {
+
+            this.pokedex = JSON.parse(localStorage.getItem('pokedex'));
+
+        } else {
+            console.log("ciao")
         }
 
     },
@@ -63,8 +77,8 @@ export default {
 
                 .catch(error => {
 
-                    console.error('Errore nella richiesta', error);
                     this.actualPokemon = [];
+                    console.error('Errore nella richiesta', error);
 
                 });
 
@@ -79,6 +93,8 @@ export default {
 
             this.pokedex.push(this.actualPokemon);
 
+            localStorage.setItem('pokedex', JSON.stringify(this.pokedex));
+
             console.log(this.pokedex);
 
             // localStorage.setItem('pokedex', JSON.stringify(this.pokedex));
@@ -91,6 +107,8 @@ export default {
             const indexToRemove = this.pokedex.indexOf(this.actualPokemon);
 
             this.pokedex.splice(indexToRemove, 1);
+
+            localStorage.setItem('pokedex', JSON.stringify(this.pokedex));
 
             console.log(this.pokedex);
 
@@ -126,6 +144,12 @@ export default {
         >
             Cattura
         </button>
+        <!-- <button 
+            v-if="!isCatched"
+            @click="addToPokedex()"
+        >
+            Cattura
+        </button> -->
 
         <button 
             v-if="pokedex.includes(actualPokemon)"
@@ -133,6 +157,12 @@ export default {
         >
             Rimuovi
         </button>
+        <!-- <button 
+            v-if="isCatched"
+            @click="removeToPokedex()"
+        >
+            Rimuovi
+        </button> -->
 
     </div>
 
