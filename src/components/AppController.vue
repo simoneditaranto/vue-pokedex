@@ -30,7 +30,7 @@ export default {
             // oggetto che contiene tutti i pokemon catturati
             pokedex: [],
 
-            isCatched: false,
+            // isCatched: false,
 
         }
 
@@ -42,10 +42,8 @@ export default {
 
             this.pokedex = JSON.parse(localStorage.getItem('pokedex'));
 
-        } else {
-            console.log("ciao")
         }
-
+         
     },
 
     methods: {
@@ -69,20 +67,17 @@ export default {
 
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.userPokemonName.toLowerCase()}`)
                 .then(res => {
-                // console.log(res.data.stats);
-                this.actualPokemon = res.data;
-                // console.log(this.actualPokemon);
+
+                    this.actualPokemon = res.data;
 
                 })
 
                 .catch(error => {
 
                     this.actualPokemon = [];
-                    console.error('Errore nella richiesta', error);
 
                 });
 
-                console.log(this.actualPokemon);
 
             };
 
@@ -134,8 +129,8 @@ export default {
 
     <AppSearch @dataSent="handleData" />
 
-    <div class="pokemon-container" v-if="actualPokemon != ''">
-
+    <!-- <div class="pokemon-container" v-if="actualPokemon != '' && !isEmpty"> -->
+        
         <AppPokemon :item="actualPokemon"></AppPokemon>
 
         <button 
@@ -164,7 +159,7 @@ export default {
             Rimuovi
         </button> -->
 
-    </div>
+    <!-- </div> -->
 
     <AppPokedex
         @pokemonSent="handleActualPokemon"
