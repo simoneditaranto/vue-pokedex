@@ -39,6 +39,8 @@ export default {
 
 <template>
 
+<h3>Pokedex</h3>
+
     <div id="pokedex">
         
         <div class="pokemon" v-for="actualItem in item">

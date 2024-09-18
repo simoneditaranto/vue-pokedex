@@ -125,8 +125,6 @@ export default {
 
 <template>
 
-    <h3>Pokemon cercato</h3>
-
     <AppSearch @dataSent="handleData" />
 
     <!-- <div class="pokemon-container" v-if="actualPokemon != '' && !isEmpty"> -->
@@ -134,7 +132,7 @@ export default {
         <AppPokemon :item="actualPokemon"></AppPokemon>
 
         <button 
-            v-if="!pokedex.includes(actualPokemon)"
+            v-if="!pokedex.includes(actualPokemon) && actualPokemon != ''"
             @click="addToPokedex()"
         >
             Cattura
@@ -147,7 +145,7 @@ export default {
         </button> -->
 
         <button 
-            v-if="pokedex.includes(actualPokemon)"
+            v-if="pokedex.includes(actualPokemon) && actualPokemon != ''"
             @click="removeToPokedex()"
         >
             Rimuovi

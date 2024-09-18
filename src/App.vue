@@ -16,9 +16,12 @@ export default {
 
 <template>
 
+
   <h1>PokeAPI</h1>
 
   <AppController></AppController>
+
+
 
 </template>
 
