@@ -1,6 +1,8 @@
 <script>
 import axios from 'axios';
 
+// import HomePage from '../pages/HomePage.vue';
+
 import AppSearch from './AppSearch.vue';
 import AppPokemon from './AppPokemon.vue';
 import AppPokedex from './AppPokedex.vue';
@@ -10,6 +12,8 @@ export default {
     name: 'AppController',
 
     components: {
+
+        // HomePage,
 
         AppSearch,
         AppPokemon,
@@ -126,6 +130,8 @@ export default {
 <template>
 
     <AppSearch @dataSent="handleData" />
+
+    <!-- <HomePage></HomePage> -->
 
     <!-- <div class="pokemon-container" v-if="actualPokemon != '' && !isEmpty"> -->
         

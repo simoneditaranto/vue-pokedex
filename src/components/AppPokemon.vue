@@ -193,17 +193,20 @@ export default {
                 <div class="pokemon-weight">{{ item.weight / 10}} KG</div>
             </div>
 
-        <div class="stats">
+        <!-- <div class="stats">
 
             <div class="stat"v-for="actualStats in item.stats">
                 {{ actualStats.stat.name }}: 
                 <div class="progressive-bar">
                     <div class="bar-fill">
-                        <!-- {{ actualStats.base_stat }} -->
+                        
                     </div>
                 </div>
             </div>
             
+        </div> -->
+        <div class="show-more">
+            <router-link :to="{name: 'show-pokemon', params: { id: item.name } }"><button>Mostra dettagli</button></router-link>
         </div>
 
         
@@ -222,7 +225,7 @@ export default {
     flex-direction: column;
     align-items: center;
 
-    padding: 20px;
+    padding: 20px 0;
 
     width: 400px;
 

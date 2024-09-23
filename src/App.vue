@@ -1,11 +1,13 @@
 <script>
 
+import AppHeader from './components/AppHeader.vue';
 import AppController from './components/AppController.vue';
 
 export default {
 
   components: {
 
+    AppHeader,
     AppController,
 
   },
@@ -16,10 +18,11 @@ export default {
 
 <template>
 
+  <AppHeader></AppHeader>
 
-  <h1>PokeAPI</h1>
+  <!-- <AppController></AppController> -->
 
-  <AppController></AppController>
+  <router-view></router-view>
 
 
 

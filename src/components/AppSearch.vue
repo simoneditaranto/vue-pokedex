@@ -53,9 +53,10 @@ export default {
 #search-item {
     display: flex;
 
-    font-size: 1.5em;
+    // font-size: 1.5em;
 
     color: white;
+
     label{
         margin-right: 10px;
     }

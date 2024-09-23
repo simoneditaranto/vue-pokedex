@@ -53,8 +53,13 @@ export default {
 
                 <img :src="actualItem.sprites.front_default" :alt="actualItem.name">
 
+                
             </div>
-
+            
+            <div class="pokemon-name">
+                {{ actualItem.name }}
+            </div>
+            
         </div>
         
 
@@ -65,12 +70,27 @@ export default {
 <style lang="scss" scoped>
 
 #pokedex {
+
+    display: flex;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
     
     padding: 20px;
 
     border: 1px solid rgb(124, 0, 124);
 
     .pokemon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        width: calc(100% / 2 - 20px / 2 * 1);
+
+        border: 1px solid black;
+
+        border-radius: 10px;
 
         .pokemon-name {
 
