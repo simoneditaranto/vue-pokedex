@@ -32,7 +32,7 @@ export default {
 
             this.pokemonNameList = res.data.results;
 
-            console.log(res.data.results)
+            // console.log(res.data.results)
 
             this.giveUrl();
 
@@ -59,14 +59,14 @@ export default {
                         })
     
                     }
-                    console.log(this.pokemonList)
+                    // console.log(this.pokemonList)
 
         },
 
         changeActualPokemon(actualPokemon) {
             this.actualPokemon = actualPokemon;
 
-            console.log(this.actualPokemon)
+            // console.log(this.actualPokemon)
         },
 
     },

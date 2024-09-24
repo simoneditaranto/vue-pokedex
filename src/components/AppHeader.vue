@@ -15,7 +15,10 @@ export default {
 <div class="app-links">
 
     <ul>
-        <li>Homepage</li>
+        <li>
+            <router-link :to="{name: 'home'}">Homepage</router-link>
+            
+        </li>
         <li>Pokedex</li>
     </ul>
 

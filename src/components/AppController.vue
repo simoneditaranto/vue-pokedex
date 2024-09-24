@@ -1,8 +1,6 @@
 <script>
 import axios from 'axios';
 
-// import HomePage from '../pages/HomePage.vue';
-
 import AppSearch from './AppSearch.vue';
 import AppPokemon from './AppPokemon.vue';
 import AppPokedex from './AppPokedex.vue';
