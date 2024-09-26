@@ -18,8 +18,8 @@ export default {
         <li>
             <router-link :to="{name: 'home'}">Homepage</router-link>
             
+            <router-link :to="{name: 'pokedex'}">Pokedex</router-link>
         </li>
-        <li>Pokedex</li>
     </ul>
 
 </div>

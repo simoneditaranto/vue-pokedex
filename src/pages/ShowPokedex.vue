@@ -1,19 +1,26 @@
 <script>
+import { store } from '../store';
 
 export default {
 
-    name: 'AppPokemon',
+    name: 'ShowPokedex',
 
-    props: {
+    created() {
 
-        item: Object,
-    
+        if(localStorage.getItem('pokedex') != null) {
+
+            this.store.pokedex = JSON.parse(localStorage.getItem('pokedex'));
+
+        }
+ 
     },
 
     data() {
-        
+
         return {
 
+            store,
+            
             pokemonTypes: [
                 {
                     typeName : 'fire',
@@ -115,26 +122,19 @@ export default {
 
     methods: {
 
-        selectedColorType(actualType) {
+        selecedtBackSprie(actualPokemon) {
+            
+            // il metodo map() restituisce un nuovo array actualTypes con i nomi dei tipi pokemon
+            // prima però mi assicuro che this.pokemon.types sia definito
+            const actualTypes = actualPokemon.types ? actualPokemon.types.map(t => t.type.name) : [];
 
-            const selectedType = this.pokemonTypes.find(
-                element => element.typeName === actualType.type.name
-            );
-
-            return selectedType ? selectedType.color : 'black';
-
-        },
-
-        selectedIconType(actualType) {
-
-            const selectedType = this.pokemonTypes.find(
-                element => element.typeName === actualType.type.name
-            );
-
-            return selectedType ? selectedType.icon : 'null';
+            for(let i = 0; i < this.pokemonTypes.length; i++) {
+                if(this.pokemonTypes[i].typeName === actualTypes[0]) {
+                    return this.pokemonTypes[i].color;
+                }
+            }
 
         },
-        
 
     },
 
@@ -144,105 +144,66 @@ export default {
 
 <template>
 
-    <div id="pokemon" class="container" v-if="item != ''">
+<h3>Pokedex</h3>
 
-        <div class="pokemon-sprite">
+<div id="pokedex">
 
-            <!-- <img :src="item.sprites.front_default" :alt="item.name"> -->
-            <img :src="item.sprites.other['official-artwork'].front_default" :alt="item.name">
-            <!-- <img :src="item.sprites.other.showdown.front_default" :alt="item.name"> -->
+    <router-link 
+        :to="{name: 'show-pokemon', params: { id: actualPokemon.name } }"
+        v-for="actualPokemon in store.pokedex" 
+        class="single-pokemon" 
+        :style="{ backgroundColor: selecedtBackSprie(actualPokemon) }" 
+    >
 
-        </div>
+        <img :src="actualPokemon.sprites.other['official-artwork'].front_default" alt="">
 
-            <div class="pokemon-name">{{ item.name.charAt(0).toUpperCase() + item.name.slice(1) }}</div>
+        <div class="name">{{ actualPokemon.name }}</div>
 
-            <div class="types">
-                <div 
-                    v-for="actualType in item.types"
-                    class="type" 
-                    :style="{ backgroundColor: selectedColorType(actualType) }"
-                >
-                    <img :src="`/icons/${selectedIconType(actualType)}`" alt="">
-                    {{ actualType.type.name.toUpperCase() }}
-                </div>
-            </div>
+    </router-link>
 
-            <div class="pokemon-desc">
-                <div class="pokemon-height">0.{{ item.height }} M</div>
-                <div class="pokemon-weight">{{ item.weight / 10}} KG</div>
-            </div>
-
-        <div class="show-more">
-            <router-link :to="{name: 'show-pokemon', params: { id: item.name } }"><button>Mostra dettagli</button></router-link>
-        </div>
-
-        
-
-    </div>
-    <div class="empty-pokemon" v-else>
-        nessun pokemon selezionato
-    </div>
+</div>
 
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-#pokemon {
+#pokedex {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 
-    padding: 20px 0;
-
-    width: 400px;
-
-    border: 1px solid red;
-    border-radius: 5%;
+    padding: 10px;
 
     color: white;
 
-    background: linear-gradient(to bottom, rgba(5, 11, 26, 0.75), rgba(48, 92, 21, 0.75));
+    background-color: #272528;
 
-    .pokemon-sprite {
-        width: 200px;
+    .single-pokemon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 10px;
+
+        width: calc(100% / 2 - 10px / 2 * 1);
+        aspect-ratio: 1 / 1;
+
+        border-radius: 15px;
 
         img {
-            width: 100%;
-        }
-    }
-
-    .pokemon-name {
-        font-size: 2em;
-    }
-
-    .types {
-        display: flex;
-        gap: 50px;
-
-        .type {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-
-            padding: 5px;
-
             width: 120px;
-
-            text-align: center;
-
-            border-radius: 10px;
         }
 
-        img {
-            width: 20px;
-        }
-    }
+        .name {
 
-    .pokemon-desc {
-        display: flex;
-        gap: 50px;
+            text-decoration: none !important;
+            
+        }
+
     }
 
 }
+
 
 </style>

@@ -1,6 +1,8 @@
 <script>
 import axios from 'axios';
 
+import { store } from '../store';
+
 export default {
 
     name: 'ShowPokemon',
@@ -13,17 +15,24 @@ export default {
         .then(res => {
             this.pokemon = res.data;
             this.pokemonSprite = res.data.sprites.other['official-artwork'].front_default;
+            this.typesLength = this.pokemon.types.length;
+
+            // some() interrompe l'iterazione non appena trova un elemento che soddisfa la condizione
+            this.pokemonIsPresent = this.store.pokedex.some(p => p.name === this.pokemon.name);
+            
         });
 
         this.progressiveBar();
 
-        
 
     },
 
     data() {
 
         return {
+
+            // importo lo store per inserire il pokemon nel pokedex
+            store,
 
             pokemonTypes: [
                 {
@@ -130,6 +139,12 @@ export default {
             // viene effettuata la chiamata api
             pokemonSprite: '',
 
+            // variabile che memorizza la lunghezza dei tipi del pokemon
+            // della chiamata api 
+            typesLength: 0,
+
+            pokemonIsPresent: false,
+
         }
 
     },
@@ -177,6 +192,48 @@ export default {
 
         },
 
+        selecedtBackSprie() {
+            
+            // il metodo map() restituisce un nuovo array actualTypes con i nomi dei tipi pokemon
+            // prima però mi assicuro che this.pokemon.types sia definito
+            const actualTypes = this.pokemon.types ? this.pokemon.types.map(t => t.type.name) : [];
+
+            for(let i = 0; i < this.pokemonTypes.length; i++) {
+                if(this.pokemonTypes[i].typeName === actualTypes[0]) {
+                    return this.pokemonTypes[i].color;
+                }
+            }
+
+        },
+
+        // metodo che aggiunge il pokemon cercato al pokedex
+        addToPokedex() {
+
+            this.store.pokedex.push(this.pokemon);
+
+            localStorage.setItem('pokedex', JSON.stringify(this.store.pokedex));
+
+            // console.log(this.store.pokedex);
+
+            this.pokemonIsPresent = true;
+
+        },
+
+        // metodo che rimuove il pokemon attuale dal pokedex, se è gia presente
+        removeToPokedex() {
+
+            // findIndex() trova l'indice del primo pokemon con lo stesso nome di this.pokemon.name
+            const indexToRemove = this.store.pokedex.findIndex(p => p.name === this.pokemon.name);
+
+            console.log(indexToRemove)
+            this.store.pokedex.splice(indexToRemove, 1);
+
+            localStorage.setItem('pokedex', JSON.stringify(this.store.pokedex));
+
+            this.pokemonIsPresent = false;
+
+        },
+
     },
 
 }
@@ -188,7 +245,7 @@ export default {
 
 <div id="pokemon">
 
-    <div class="sprite-container">
+    <div class="sprite-container" :style="{ backgroundColor: selecedtBackSprie() }">
 
         <img :src="pokemonSprite" :alt="pokemon.name">
 
@@ -239,6 +296,20 @@ export default {
 
         </div>
 
+        <button 
+            v-if="!pokemonIsPresent"
+            @click="addToPokedex()"
+        >
+            Cattura
+        </button>
+
+        <button 
+            v-if="pokemonIsPresent"
+            @click="removeToPokedex()"
+        >
+            Rimuovi
+        </button>
+
     </div>
 
 </div>
@@ -267,7 +338,7 @@ export default {
 
         border-radius: 0 0 30px 30px;
 
-        background-color: #439837;
+        // background-color: #439837;
 
         img {
 
